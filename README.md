@@ -1,1 +1,1 @@
-# mobil-programozas-kezdo
+# Mobil programozás
