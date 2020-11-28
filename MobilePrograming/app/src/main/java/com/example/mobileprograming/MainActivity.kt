@@ -1,11 +1,15 @@
 package com.example.mobileprograming
 
+import android.app.DatePickerDialog
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mobileprograming.adapter.ListTaskAdapter
 import com.example.mobileprograming.dbhelper.DBHelper
 import com.example.mobileprograming.model.Task
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
+import kotlin.collections.ArrayList
 
 class MainActivity : AppCompatActivity() {
     internal lateinit var db: DBHelper
@@ -53,6 +57,18 @@ class MainActivity : AppCompatActivity() {
             refreshData()
         }
 
+    }
+
+    fun openPickerDate(view : View) {
+        val c = Calendar.getInstance()
+        val year = c.get(Calendar.YEAR)
+        val month = c.get(Calendar.MONTH)
+        val day = c.get(Calendar.DAY_OF_MONTH)
+
+        val dpd = DatePickerDialog(this, DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+            edt_date.setText("" + year + "/" + monthOfYear + "/" + dayOfMonth)
+        }, year, month, day)
+        dpd.show()
     }
 
     private fun refreshData() {
