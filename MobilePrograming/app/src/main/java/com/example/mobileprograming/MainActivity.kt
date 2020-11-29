@@ -1,11 +1,13 @@
 package com.example.mobileprograming
 
 import android.app.DatePickerDialog
+import android.content.Context
 import android.os.Bundle
 import android.view.View
+import android.view.inputmethod.InputMethodManager
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mobileprograming.adapter.ListTaskAdapter
-import com.example.mobileprograming.dbhelper.DBHelper
+import com.example.mobileprograming.db.DBHelper
 import com.example.mobileprograming.model.Task
 import kotlinx.android.synthetic.main.activity_main.*
 import java.util.*
@@ -23,16 +25,15 @@ class MainActivity : AppCompatActivity() {
 
         refreshData()
 
-        //Event
         btn_add.setOnClickListener{
             val task = Task(
-                //Integer.parseInt(edt_id.text.toString()),
                 edt_name.text.toString(),
                 edt_desc.text.toString(),
                 edt_date.text.toString()
             )
             db.addTask(task)
             refreshData()
+            closeKeyBoard()
         }
 
         btn_update.setOnClickListener{
@@ -44,6 +45,7 @@ class MainActivity : AppCompatActivity() {
             )
             db.updateTask(person)
             refreshData()
+            closeKeyBoard()
         }
 
         btn_delete.setOnClickListener{
@@ -55,6 +57,7 @@ class MainActivity : AppCompatActivity() {
             )
             db.deleteTask(person)
             refreshData()
+            closeKeyBoard()
         }
 
     }
@@ -75,6 +78,14 @@ class MainActivity : AppCompatActivity() {
         listTasks = db.getAllTasks
         val adapter = ListTaskAdapter(this@MainActivity, listTasks, edt_id, edt_name,
             edt_desc, edt_date)
-        list_person.adapter = adapter
+        list_task.adapter = adapter
+    }
+
+    private fun closeKeyBoard() {
+        val view = this.currentFocus
+        if (view != null) {
+            val imm = getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
+            imm.hideSoftInputFromWindow(view.windowToken, 0)
+        }
     }
 }

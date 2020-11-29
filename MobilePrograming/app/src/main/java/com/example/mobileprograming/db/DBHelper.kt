@@ -1,4 +1,4 @@
-package com.example.mobileprograming.dbhelper
+package com.example.mobileprograming.db
 
 import android.content.ContentValues
 import android.content.Context
@@ -56,7 +56,6 @@ class DBHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
     fun addTask(task: Task) {
         val db = this.writableDatabase
         val values = ContentValues()
-        //values.put(COL_ID, task.id)
         values.put(COL_NAME, task.name)
         values.put(COL_DESC, task.desc)
         values.put(COL_DATE, task.date)
